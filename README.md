@@ -3,43 +3,43 @@ PhoneTag
 
 User object 
 {
-	_id
-	phoneid
-	name
-	location
-	friends
-	games
+	_id : ObjectID
+	phoneID : String
+	name : String
+	location : Location (lat, long)
+	friends : ObjectID[]
+	games : ObjectID[]
 }
 
 Game object
 {
-	_id
-	users
-	isIt
+	_id : ObjectID
+	users : ObjectID[]
+	isIt : ObjectID
 }
 
 GCM Message
 {
-	
+
 }
 
 Database Functions (JON)
 -----
-newUser(dict);
-updateUser();
+newUser(user);
+updateUser(user, something);
 newGame();
 updateGame();
 deleteGame();
-adduser();
-removeUser();
+addUserToGame(user, game);
+removeUser(user);
 
 
 Server Functions (VSAI, NORBS)
 -----
-registerPhone();
-updateLocs();
+registerPhone(name);
+updateLocs(lat, long);
 joinGame();
-updateMe();
+updatePhone(whosIt, location{});
 
 
 Android
