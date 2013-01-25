@@ -13,6 +13,7 @@ class MainHandler(tornado.web.RequestHandler):
 		self.write(reg_ids[len(reg_ids)-1])
 
 	def post(self):
+		print self.get_argument('id')
 		reg_ids.append(self.get_argument('id'))
 				
 
