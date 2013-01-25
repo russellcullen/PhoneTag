@@ -10,7 +10,7 @@ reg_ids = []
 
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write("Hello World")
+		self.write(reg_ids[len(reg_ids)-1])
 
 	def post(self):
 		reg_ids.append(self.get_argument('id'))
@@ -22,9 +22,9 @@ class SendHandler(tornado.web.RequestHandler):
 			msg = self.get_argument('msg')
 		except:
 			msg = "No Message"
-		if (len(reg_ids) > 0):
-			data = {'msg': msg}
-			gcm.json_request(registration_ids=reg_ids, data=data)
+		# if (len(reg_ids) > 0):
+		data = {'msg': msg}
+		gcm.json_request(registration_ids=reg_ids, data=data)
 		self.write("Sent: " + msg)
 
 application = tornado.web.Application([
