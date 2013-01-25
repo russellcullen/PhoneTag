@@ -13,6 +13,7 @@ class MainHandler(tornado.web.RequestHandler):
 		self.write("Hello World")
 
 	def post(self):
+		print self.get_argument('id')
 		reg_ids.append(self.get_argument('id'))
 
 application = tornado.web.Application([
