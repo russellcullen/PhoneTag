@@ -7,11 +7,11 @@ class Game(BaseClass):
 		self.users = users
 		self.it = it
 		self.finished = finished
-        self.leaderboard = leaderboard
-        self.startTime = startTime
-        self.timeLimit = timeLimit
-        self.scoreLimit = scoreLimit
-        self.lastItTime = lastItTime
+		self.leaderboard = leaderboard
+		self.startTime = startTime
+		self.timeLimit = timeLimit
+		self.scoreLimit = scoreLimit
+		self.lastItTime = lastItTime
         
 
 	def addUser(self, user):
