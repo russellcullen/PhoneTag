@@ -162,8 +162,12 @@ class GameGetHandler(tornado.web.RequestHandler):
         #elif (dbCall == "removeUser"):
             #logging.info("Calling remove user from database")
 
-        #check token removeUser, tag, leaveGame
 
+class ClearDataHandler(tornado.web.RequestHandler):
+    
+    def get(self):
+        logging.debug("Clearing Data Handler")
+        DB = database_api.clear_db()
 
 application = tornado.web.Application([
                 (r"/", MainHandler),
@@ -173,6 +177,7 @@ application = tornado.web.Application([
                 (r"/newGame?", GameGetHandler),
                 (r"/joinGame?", GameGetHandler),
                 (r"/tag?", GameGetHandler),
+                (r"/clear", ClearDataHandler),
             ])
 
 if __name__ == "__main__":

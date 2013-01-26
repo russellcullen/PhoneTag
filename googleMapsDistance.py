@@ -35,7 +35,6 @@ import json
 import urllib2
 
 
-
 dic = {"origins" : "5232 Forbes Avenue Pittsburgh Pennsylvania", 
         "destinations" : "133 North Dithridge Pittsburgh Pennsylvania", 
         "sensor" : "false", 
