@@ -8,7 +8,7 @@ import time
 
 class DatabaseApi:
 
-	def __init__(self, db = 'something'):
+	def __init__(self, db = 'heroku_app11283429'):
 		self.connection = pymongo.Connection(os.environ.get('MONGOLAB_URI', None))
 		self.db = self.connection[db]
 	
