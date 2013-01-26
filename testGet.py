@@ -36,6 +36,11 @@ httpServ.request("GET", "/newUser?%s" % params)
 response = httpServ.getresponse()
 printText(response.read())
 
+params = urllib.urlencode({"name" : "YOLOSWAG1", "ACM" : "10b"})
+httpServ.request("GET", "/updateUser?%s" % params)
+response = httpServ.getresponse()
+printText(response.read())
+
 httpServ.close()
 
 #if response.status == httplib.OK:
