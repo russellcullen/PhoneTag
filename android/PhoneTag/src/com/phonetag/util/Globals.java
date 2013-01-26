@@ -52,7 +52,6 @@ public class Globals {
 
     public void setToken(Context ctx, String token) {
         this.token = token;
-        Log.e("SETTING", "SETing TOKEN");
         Storage.save(ctx);
     }
 

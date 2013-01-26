@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.phonetag.models.Game;
@@ -48,8 +47,29 @@ public class GCMIntentService extends GCMBaseIntentService {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            List<User> currUsers = Globals.getInstance().getUsers();
+            ArrayList<User> allUsers = new ArrayList<User>();
+            for (User uNew : users) {
+                boolean found = false;
+                if (currUsers != null) {
+                    for (User uOld : currUsers) {
+                        if (uNew.getPhoneID().equals(uOld.getPhoneID())) {
+                            uOld.setLatitude(uNew.getLatitude());
+                            uOld.setLongitude(uNew.getLongitude());
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    allUsers.add(uNew);
+                }
+            }
+            if (currUsers != null) {
+                allUsers.addAll(currUsers);
+            }
+            Globals.getInstance().setUsers(arg0, allUsers);
             
-            Globals.getInstance().setUsers(arg0, users);
             Intent broadcast = new Intent("com.phonetag.update");
             sendBroadcast(broadcast);
             // TODO: Do something with users
@@ -89,20 +109,31 @@ public class GCMIntentService extends GCMBaseIntentService {
             }
             
             // TODO: Update for everyone
+        } if (intent.hasExtra("phoneID")) {
+            String phoneID = intent.getStringExtra("phoneID");
+            String gameID = intent.getStringExtra("gameID");
+            List<Game> games = Globals.getInstance().getGames();
+            if (games != null) {
+                for (Game g : games) {
+                    if (g.getName().equals(gameID)) {
+                        g.getUsers().add(phoneID);
+                    }
+                }
+            }
         }
     }
 
     @Override
     protected void onRegistered(Context ctx, String id) {
         Globals.getInstance().setId(ctx, id);
-        Api.register(ctx, id, "coolbrow");
-        Globals.getInstance().setName(this, "coolbrow");
+        Api.register(ctx, id, Globals.getInstance().getName());
+//        Globals.getInstance().setName(this, "jon");
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null) {
             Api.updateLoc(id, location.getLatitude(), location.getLongitude());
         }
-        Api.newGame(ctx, id, "yoloswag");
+//        Api.joinGame(ctx, id, "yoloswag");
     }
 
     @Override

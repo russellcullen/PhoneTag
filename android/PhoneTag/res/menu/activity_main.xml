@@ -1,9 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_settings"
+        android:id="@+id/join_game"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/menu_settings"/>
+        android:title="Join Game"/>
+    
+        <item
+        android:id="@+id/create_game"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Create Game"/>
 
 </menu>

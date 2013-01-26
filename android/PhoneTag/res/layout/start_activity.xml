@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+    
+    <EditText 
+        android:id="@+id/fridge"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginRight="10dip"
+	    android:layout_marginLeft="10dip"
+	    android:hint="Enter Username"
+	    android:background="@color/fg"/>
+    <Button 
+        android:id="@+id/start"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Go"
+	    android:layout_marginRight="10dip"
+	    android:layout_marginLeft="10dip"/>
+
+</LinearLayout>

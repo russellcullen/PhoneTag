@@ -27,13 +27,13 @@ public class User {
     public double getLatitude() {
         return latitude;
     }
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
+    public void setLatitude(double d) {
+        this.latitude = d;
     }
     public double getLongitude() {
         return longitude;
     }
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
     public List<String> getFriends() {
