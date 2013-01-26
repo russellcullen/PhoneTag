@@ -53,15 +53,40 @@ class DatabaseApi:
 		users.update({'phoneID' : phoneID}, u.__dict__)
 		return True
 
+	# return : true,  if successful
+	# 		   false, if unsuccessful
+	def addUserToGame(self, userPhoneID, gameName):
+		games = self.db.games
+		game = self.getGameByName(gameName)
+		user = self.getUserByPhoneID(userPhoneID)
+		if game != None and user != None:
+			users = game.users
+			for u in users:
+				if u == userPhoneID:
+					return False
+			# add to game's user list
+			games.update({'name' : gameName}, {'$push' : {'users' : userPhoneID}})
+			# add to game's scoreboard
+			negativeboard = game.negativeboard
+			negativeboard[userPhoneID] = 0
+			games.update({'name' : gameName}, {'$set' : {'negativeboard' : negativeboard}})
+			leaderboard = game.leaderboard
+			leaderboard[userPhoneID] = 0
+			games.update({'name' : gameName}, {'$set' : {'leaderboard' : leaderboard}})
+			return True
+		return False
+
 	# returns : Game object, if doesn't exist
 	# 		  : None, 		 if exists already
-	def newGame(self, gameDict):
+	def newGame(self, userPhoneID, gameDict):
 		games = self.db.games
 		g = game.Game()
 		g.fromDict(gameDict)
 		if self.getGameByName(g.name) != None:
 			return None
 		games.insert(g.__dict__)
+		self.addUserToGame(userPhoneID, g.name)
+		games.update({'name' : g.name}, {'$set' : {'it' : userPhoneID}})
 		return g
 
 	# returns : Game object, if exists
@@ -86,31 +111,6 @@ class DatabaseApi:
 		g.fromDict(gameDict);
 		games.update({'name' : gameName}, g.__dict__)
 		return True
-
-	# return : true,  if successful
-	# 		   false, if unsuccessful
-	def addUserToGame(self, userPhoneID, gameName):
-		games = self.db.games
-		game = self.getGameByName(gameName)
-		user = self.getUserByPhoneID(userPhoneID)
-		if game != None and user != None:
-			users = game.users
-			for u in users:
-				if u == userPhoneID:
-					return False
-			# add to game's user list
-			games.update({'name' : gameName}, {'$push' : {'users' : userPhoneID}})
-			# add to game's scoreboard
-			negativeboard = game.negativeboard
-			negativeboard[userPhoneID] = 0
-			games.update({'name' : gameName}, {'$set' : {'negativeboard' : negativeboard}})
-			leaderboard = game.leaderboard
-			leaderboard[userPhoneID] = 0
-			games.update({'name' : gameName}, {'$set' : {'leaderboard' : leaderboard}})
-			if game.it == "":
-				games.update({'name' : gameName}, {'$set' : {'it' : userPhoneID}})
-			return True
-		return False
 
 	# returns : true,  if successful
 	# 		  : false, if failed

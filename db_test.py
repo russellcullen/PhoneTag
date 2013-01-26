@@ -22,9 +22,9 @@ def insertSomeUsers(apiInstance):
 
 def insertSomeGames(apiInstance):
 	game1 = {"name" : "game1"}
-	game2 = {"name" : "game2", "users" : ["user2"]}
-	apiInstance.newGame(game1)
-	apiInstance.newGame(game2)
+	game2 = {"name" : "game2"}
+	apiInstance.newGame("user1", game1)
+	apiInstance.newGame("user2", game2)
 
 
 
@@ -47,7 +47,7 @@ def testGetUsersByGame():
 	if not (len(userList2) == 1 and userList2[0] == "user2"):
 		return False
 	userList1 = a.getUsersByGame("game1")
-	if not (len(userList1) == 0):
+	if not (len(userList1) == 1 and userList1[0] == "user1"):
 		return False 
 	return True
 
