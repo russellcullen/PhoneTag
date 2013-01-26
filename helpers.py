@@ -13,7 +13,6 @@ def changeScoreOnTag(gameID, time, lastIt):
 	
 def updateScores(game, time):
 	db = DatabaseApi('test')
-	#game = db.getGameByname(gameID)
 	startTime = game.startTime
 	leaderboard = game.leaderboard
 	for k,v in leaderboard.iteritems():

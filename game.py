@@ -2,7 +2,7 @@ from baseobj import *
 from user import *
 
 class Game(BaseClass):
-	def __init__(self, name = "", users = [], it = "", finished = False, negativeboard = {}, leaderboard = {}, startTime = 0.0, timeLimit = 0.0, scoreLimit = 0, lastItTime = 0.0):
+	def __init__(self, name = "", users = [], it = "", finished = False, negativeboard = {}, leaderboard = {}, startTime = 0.0, timeLimit = 10000.0, scoreLimit = 10000, lastItTime = 0.0):
 		self.name = name
 		self.users = users
 		self.it = it
