@@ -28,7 +28,8 @@ def sendScoresAll():
     for x in games:
         a = []
         sorted_scores = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
-        for y in sorted_scores.reverse():
+        sorted_scores.reverse()
+        for y in sorted_scores:
             a.append({y[0] : y[1]})
         u = x.users
         ids = []
