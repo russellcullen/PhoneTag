@@ -167,7 +167,8 @@ class ClearDataHandler(tornado.web.RequestHandler):
     
     def get(self):
         logging.debug("Clearing Data Handler")
-        DB = database_api.clear_db()
+        DB = database_api.DatabaseApi(databaseName)
+        DB.clear_db()
 
 application = tornado.web.Application([
                 (r"/", MainHandler),
