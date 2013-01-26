@@ -35,6 +35,17 @@ class DatabaseApi:
 		u = user.User()
 		u.fromDict(user_dict)
 		return u
+
+	# returns : User object, if exists
+	# 		  : None, 		 if doesn't exist
+	def getUserByName(self, userName):
+		users = self.db.users
+		user_dict = users.find_one({'name' : userName})
+		if user_dict == None:
+			return None
+		u = user.User()
+		u.fromDict(user_dict)
+		return u
 		
 	# untested
 	def deleteUser(self, userPhoneID):

@@ -34,6 +34,12 @@ def testGetUserByPhoneID():
 		return False
 	return True
 
+def testGetUserByName():
+	reset_db(a)
+	if a.getUserByName("user1") == None:
+		return False
+	return True
+
 def testGetGameByName():
 	reset_db(a)
 	game1 = a.getGameByName("game1")
@@ -116,6 +122,7 @@ def test():
 	print "Testing Functions"
 
 	print testGetUserByPhoneID()
+	print testGetUserByName()
 	print testGetGameByName()
 	print testGetUsersByGame()
 	print testAddUserToGame()
