@@ -16,8 +16,8 @@ def updateScores(game, time):
 	#game = db.getGameByname(gameID)
 	startTime = game.startTime
 	leaderboard = game.leaderboard
-	for (k,v) in leaderboard:
-		if ( k != it):
+	for k,v in leaderboard.iteritems():
+		if k != game.it:
 			new_score = time - startTime - game.negativeboard[k]
 			leaderboard[k] = new_score
 			if (new_score >= game.scoreLimit):

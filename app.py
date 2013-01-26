@@ -89,6 +89,7 @@ class GameGetHandler(tornado.web.RequestHandler):
         pID = query_components.get("phoneID")
         tkn = query_components.get("token")
         gnm = query_components.get("gameName")
+        query_components["name"] = gnm
         
         DB = database_api.DatabaseApi(databaseName)
         
@@ -140,9 +141,9 @@ class GameGetHandler(tornado.web.RequestHandler):
             if (tkn == hash(pID) and gnm != None):
                 succ = DB.getUserByName(query_components.get("tagName"))
                 if (succ != None):
-                    d = {"gameName" : gnm, "it" : succ.phoneID}
+                    d = {"name" : gnm, "it" : succ.phoneID}
                     logging.info("Success tag")
-                    succUpdate = updateGame(d)
+                    succUpdate = DB.updateGame(d)
                     if (succUpdate):
                         helpers.changeScoreOnTag(gnm, time.time(), pID)
                         gcm_api.sendIt(gnm)
@@ -174,11 +175,12 @@ application = tornado.web.Application([
             ])
 
 if __name__ == "__main__":
-	port = int(os.environ.get('PORT', 5000))
-	application.listen(port)
-	tornado.ioloop.IOLoop.instance().start()
     t = gcm_api.UpdateThread()
     t.start()
+    port = int(os.environ.get('PORT', 5000))
+    application.listen(port)
+    tornado.ioloop.IOLoop.instance().start()
+    
 
 
 

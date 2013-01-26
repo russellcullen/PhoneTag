@@ -14,13 +14,13 @@ rs_id = "APA91bFg0W13FKARHpS0vLNkbf8eoKK4pAubK2xt-6W4TD9lxuWM0G8i8hSiQ5x_xY-tStu
 class UpdateThread(threading.Thread): 
     def run(self):
         t = time.time()
-        interval = 60
+        interval = 15
         while(True):
             if (time.time() > t + interval):
                 t = time.time()
-                updateScoresAll(t)
                 sendUserInfoAll()
-                checkFinishedAll(t)
+                #updateScoresAll(t)
+                #checkFinishedAll(t)
                 
 
 def sendIt(gameID):
@@ -75,4 +75,4 @@ t = UpdateThread()
     
 #sendUserInfoAll()
 #sendIt("game2")
-sendUserInfo("game1", rs_id)
+#sendUserInfo("game1", rs_id)

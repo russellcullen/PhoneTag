@@ -86,6 +86,10 @@ class DatabaseApi:
 			leaderboard[userPhoneID] = 0
 			games.update({'name' : gameName}, {'$set' : {'leaderboard' : leaderboard}})
 			return True
+		if game == None:
+			print "a"
+		if user == None:
+			print "b"
 		return False
 
 	# returns : Game object, if doesn't exist
