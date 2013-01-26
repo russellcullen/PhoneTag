@@ -8,6 +8,7 @@ import android.view.Menu;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.phonetag.util.Globals;
+import com.phonetag.util.Storage;
 
 public class MainActivity extends Activity {
 
@@ -20,10 +21,11 @@ public class MainActivity extends Activity {
         if (regId.equals("")) {
           GCMRegistrar.register(this, "343246241155");
         } else {
-          // Workaround for persisting id to disk
           Globals.getInstance().setId(this, regId);
+          Globals.getInstance().setName(this, "coolbrow");
           Log.v("HERE", "Already registered: " + regId);
         }
+        Storage.load(this);
         setContentView(R.layout.activity_main);
     }
 
