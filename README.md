@@ -6,7 +6,8 @@ User object
 	_id : ObjectID
 	phoneID : String
 	name : String
-	location : Location (lat, long)
+	latitude : float
+	longitutde : float
 	friends : ObjectID[]
 	games : ObjectID[]
 }
