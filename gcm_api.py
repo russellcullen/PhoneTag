@@ -27,8 +27,8 @@ def sendScoresAll():
     games = db.getAllUnfinishedGames()
     for x in games:
         a = []
-        sorted_scores.reverse() = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
-        for y in sorted_scores:
+        sorted_scores = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
+        for y in sorted_scores.reverse():
             a.append({y[0] : y[1]})
         u = x.users
         ids = []
