@@ -122,7 +122,8 @@ class GameGetHandler(tornado.web.RequestHandler):
                 if (succ):
                     logging.info("Success joinGame")
                     gameObj = DB.getGameByName(gnm)
-                    self.write(dumps(gameObj.__dict__))
+                    gcm_api.alertPlayerJoined(gnm, pID)
+					self.write(dumps(gameObj.__dict__))
                 else:
                     logging.warning("Fail joinGame")
                     self.write("FailToUpdate")

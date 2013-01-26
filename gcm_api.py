@@ -50,6 +50,16 @@ def sendUserInfoAll():
     if (len(users) > 0):
         response = gcm.json_request(registration_ids=list(set(users)), data=data)
         
+def alertPlayerJoined(gameID, phoneID):
+    db = DatabaseApi('test')
+	l = db.getUsersByGame(gameID)
+	users = []
+	data = {}
+	for x in xrange(len(l)):
+		users.append(l[x])
+	data = {'gameID' : gameID, 'phoneID' : phoneID}
+	if (len(users) > 0):
+		response = gcm.json_request(registration_ids=users, data=data)
         
 #DEPRECATED
 def sendUserInfo(gameID, reg_id):
