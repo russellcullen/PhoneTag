@@ -1,5 +1,5 @@
 class Game(object):
-    def __init__(self, objID, users = [], it = false):
-    	self.objID = objID
+    def __init__(self, name = "", users = [], it = False):
+    	self.name = name
     	self.users = users
     	self.it = it
