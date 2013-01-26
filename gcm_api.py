@@ -14,7 +14,7 @@ rs_id = "APA91bFg0W13FKARHpS0vLNkbf8eoKK4pAubK2xt-6W4TD9lxuWM0G8i8hSiQ5x_xY-tStu
 class UpdateThread(threading.Thread): 
     def run(self):
         t = time.time()
-        interval = 15
+        interval = 10
         while(True):
             if (time.time() > t + interval):
                 t = time.time()
