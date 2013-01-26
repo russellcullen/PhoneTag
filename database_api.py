@@ -100,6 +100,7 @@ class DatabaseApi:
 		g.fromDict(gameDict)
 		if self.getGameByName(g.name) != None:
 			return None
+		g.startTime = time.time()
 		games.insert(g.__dict__)
 		self.addUserToGame(userPhoneID, g.name)
 		games.update({'name' : g.name}, {'$set' : {'it' : userPhoneID}})

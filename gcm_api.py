@@ -41,18 +41,21 @@ def sendIt(gameID):
 def sendUserInfoAll():
     db = DatabaseApi('test')
     games = db.getAllUnfinishedGames()
+
+    a = []
+    users = []
+
     for x in games:
-        a = []
-        users = []
+        
         l = db.getUsersByGame(x.name)
         data = {}
         for z in xrange(len(l)):
             user = db.getUserByPhoneID(l[z])
             a.append(user.__dict__)
             users.append(l[z])
-            data = {'users' : json.dumps(a)}
-        if (len(users) > 0):
-            response = gcm.json_request(registration_ids=users, data=data)
+    data = {'users' : json.dumps(a)}
+    if (len(users) > 0):
+        response = gcm.json_request(registration_ids=list(set(users)), data=data)
         
         
 #DEPRECATED
