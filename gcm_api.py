@@ -18,9 +18,9 @@ class UpdateThread(threading.Thread):
             if (time.time() > t + interval):
                 t = time.time()
                 sendUserInfoAll()
+                sendScoresAll()
                 updateScoresAll(t)
                 checkFinishedAll(t)
-                sendScoresAll()
 
 def sendScoresAll():
     db = DatabaseApi()
@@ -30,6 +30,8 @@ def sendScoresAll():
         sorted_scores = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
         sorted_scores.reverse()
         for y in sorted_scores:
+            if (y[1] >= x.scoreLimit):
+                x.finished = True
             a.append({db.getUserByPhoneID(y[0]).name : int(y[1])})
         u = x.users
         ids = []
@@ -38,6 +40,7 @@ def sendScoresAll():
         data = {"scores" : json.dumps(a)}
         if (len(ids) > 0):
             response = gcm.json_request(registration_ids=ids, data = data)
+        db.updateGame(x.__dict__)
     
 def sendIt(gameID):
     

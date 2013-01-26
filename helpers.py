@@ -25,8 +25,8 @@ def updateScores(game, time):
 		if k != game.it:
 			new_score = time - startTime - game.negativeboard[k]
 			leaderboard[k] = new_score
-			if (new_score >= game.scoreLimit):
-				game.finished = True
+			#if (new_score >= game.scoreLimit):
+				#game.finished = True
 	game.leaderboard = leaderboard
 	db.updateGame(game.__dict__)
 	
