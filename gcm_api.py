@@ -30,7 +30,7 @@ def sendScoresAll():
         sorted_scores = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
         sorted_scores.reverse()
         for y in sorted_scores:
-            a.append({db.getUserByPhoneID(y[0]).name : y[1]})
+            a.append({db.getUserByPhoneID(y[0]).name : int(y[1])})
         u = x.users
         ids = []
         for z in xrange(len(u)):
