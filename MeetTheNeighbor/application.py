@@ -79,7 +79,7 @@ class UserGetHandler(tornado.web.RequestHandler):
                 logging.error("PhoneID is: " + pID)
                 logging.error("Token is: " + tkn)
                 self.write("FailIncorrectToken")
-    
+
 
 class GameGetHandler(tornado.web.RequestHandler):
     
@@ -122,7 +122,7 @@ class GameGetHandler(tornado.web.RequestHandler):
         #return on success: json(game)
         elif (dbCall == "joinGame"):
             logging.info("Calling joinGame: " + pID)
-            if (tkn == hash(pID) and gnm != None):
+            if (tkn == hash(pID)):
                 succ = DB.addUserToGame(pID, gnm)
                 if (succ):
                     logging.info("Success joinGame")
@@ -132,49 +132,27 @@ class GameGetHandler(tornado.web.RequestHandler):
                     logging.warning("Fail joinGame")
                     self.write("FailToUpdate")
             else:
-                logging.error("Fail joinGame -- Token did not match user or Null Game. Error!")
+                logging.error("Fail joinGame -- Token did not match user. Error!")
                 logging.error("PhoneID is: " + pID)
                 logging.error("Token is: " + tkn)
                 self.write("FailIncorrectToken")
 
 
-        #requires hashkey
-        #tag?token=&phoneID&gameName=&tagName
-        #return on success: none necessary
-        elif (dbCall == "tag"):
-            logging.info("Calling tag: " + pID)
-            if (tkn == hash(pID) and gnm != None):
-                succ = DB.getUserByName(query_components.get("tagName"))
-                if (succ != None):
-                    d = {"gameName" : gnm, "it" : succ.phoneID}
-                    logging.info("Success tag")
-                    x = updateGame(d)
-                    self.write(repr(x))
-            else:
-                logging.warning("Fail joinGame")
-                self.write("FailToUpdate")
-        else:
-            logging.error("Fail joinGame -- Token did not match user or Null Game. Error!")
-            logging.error("PhoneID is: " + pID)
-            logging.error("Token is: " + tkn)
-            self.write("FailIncorrectToken")
+#requires hashkey
+#elif (dbCall == "removeUser"):
+#logging.info("Calling remove user from database")
 
-        #requires hashkey
-        #elif (dbCall == "removeUser"):
-            #logging.info("Calling remove user from database")
-
-        #check token removeUser, tag, leaveGame
+#check token removeUser, tag, leaveGame
 
 
 application = tornado.web.Application([
-                (r"/", MainHandler),
-                (r"/newUser?", UserGetHandler),
-                (r"/updateUser?", UserGetHandler),
-                (r"/removeUser?", UserGetHandler),
-                (r"/newGame?", GameGetHandler),
-                (r"/joinGame?", GameGetHandler),
-                (r"/tag?", GameGetHandler),
-            ])
+                                       (r"/", MainHandler),
+                                       (r"/newUser?", UserGetHandler),
+                                       (r"/updateUser?", UserGetHandler),
+                                       (r"/removeUser?", UserGetHandler),
+                                       (r"/newGame?", GameGetHandler),
+                                       (r"/joinGame?", GameGetHandler),
+                                       ])
 
 if __name__ == "__main__":
 	port = int(os.environ.get('PORT', 5000))
@@ -185,7 +163,7 @@ if __name__ == "__main__":
 
 
 #def sendResponseToPhone(self, phoneID):
-    #token = hash(phoneID)
+#token = hash(phoneID)
 
 
 

@@ -30,13 +30,15 @@ httpServ = httplib.HTTPConnection("127.0.0.1", 5000)
 #response = httpServ.getresponse()
 #printText(response.read())
 
+id = "YOLOSWAG5"
+name = "jonnyboy1"
 #GET3
-params = urllib.urlencode({"name" : "YOLOSWAG", "phoneID" : "124320x"})
+params = urllib.urlencode({"phoneID" : id, "name" : name})
 httpServ.request("GET", "/newUser?%s" % params)
 response = httpServ.getresponse()
 printText(response.read())
 
-params = urllib.urlencode({"name" : "YOLOSWAG1", "ACM" : "10b"})
+params = urllib.urlencode({"phoneID" : id, "token" : "YOLOSWAG_" + id, "latitude" : 123.323, "longitude" : 121.323})
 httpServ.request("GET", "/updateUser?%s" % params)
 response = httpServ.getresponse()
 printText(response.read())
