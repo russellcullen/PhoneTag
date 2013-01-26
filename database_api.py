@@ -101,7 +101,7 @@ class DatabaseApi:
 		if self.getGameByName(g.name) != None:
 			return None
 		g.startTime = time.time()
-        g.lastItTime = g.startTime
+		g.lastItTime = g.startTime
 		g.it = userPhoneID
 		games.insert(g.__dict__)
 		self.addUserToGame(userPhoneID, g.name)		
