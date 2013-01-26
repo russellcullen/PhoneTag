@@ -4,10 +4,12 @@ import os
 import urlparse
 import database_api
 import logging
-
+import time
 from bson.json_util import dumps
 import json
-#from gcm import GCM
+from gcm import GCM
+import gcm_api
+import helpers
 
 #gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
 databaseName = 'test'
@@ -148,7 +150,10 @@ class GameGetHandler(tornado.web.RequestHandler):
                 if (succ != None):
                     d = {"gameName" : gnm, "it" : succ.phoneID}
                     logging.info("Success tag")
-                    x = updateGame(d)
+                    succUpdate = updateGame(d)
+                    if (succUpdate):
+                        helpers.changeScoreOnTag(gnm, time.time(), pID)
+                        gcm_api.sendIt(gnm)
                     self.write(repr(x))
             else:
                 logging.warning("Fail joinGame")
