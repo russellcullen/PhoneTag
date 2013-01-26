@@ -2,19 +2,9 @@ import tornado.ioloop
 import tornado.web
 import os
 import urlparse
-#from gcm import GCM
+from gcm import GCM
 
-#gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
-
-
-#from urlparse import urlparse
-# query_components = { "imsi" : "Hello" }
-
-# Or use the parse_qs method
-#from urlparse import urlparse, parse_qs
-#query_components = parse_qs(urlparse(self.path).query)
-#imsi = query_components["imsi"] 
-
+gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
 
 
 
