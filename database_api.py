@@ -103,10 +103,12 @@ class DatabaseApi:
 			# add to game's scoreboard
 			negativeboard = game.negativeboard
 			negativeboard[userPhoneID] = 0
-			games.update({'name' : gameName}, {'$set' : {'leaderboard' : negativeboard}})
+			games.update({'name' : gameName}, {'$set' : {'negativeboard' : negativeboard}})
 			leaderboard = game.leaderboard
 			leaderboard[userPhoneID] = 0
 			games.update({'name' : gameName}, {'$set' : {'leaderboard' : leaderboard}})
+			if game.it == "":
+				games.update({'name' : gameName}, {'$set' : {'it' : userPhoneID}})
 			return True
 		return False
 
