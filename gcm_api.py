@@ -23,7 +23,7 @@ class UpdateThread(threading.Thread):
 
 def sendIt(gameID):
     
-    db = DatabaseApi("test")
+    db = DatabaseApi()
     game = db.getGameByName(gameID)
     it = game.it
     u = game.users
@@ -34,7 +34,7 @@ def sendIt(gameID):
     response = gcm.json_request(registration_ids=reg_ids, data=data)
 
 def sendUserInfoAll():
-    db = DatabaseApi('test')
+    db = DatabaseApi()
     games = db.getAllUnfinishedGames()
     a = []
     users = []
@@ -51,7 +51,7 @@ def sendUserInfoAll():
         response = gcm.json_request(registration_ids=list(set(users)), data=data)
         
 def alertPlayerJoined(gameID, phoneID):
-    db = DatabaseApi('test')
+    db = DatabaseApi()
     l = db.getUsersByGame(gameID)
     users = []
     data = {}
@@ -64,7 +64,7 @@ def alertPlayerJoined(gameID, phoneID):
 #DEPRECATED
 def sendUserInfo(gameID, reg_id):
     
-    db = DatabaseApi("test")
+    db = DatabaseApi()
     l = db.getUsersByGame(gameID)
     a = []
     data = {}
