@@ -146,6 +146,7 @@ class GameGetHandler(tornado.web.RequestHandler):
                     logging.info("Success tag")
                     succUpdate = DB.updateGame(d)
                     if (succUpdate):
+                        print gnm
                         helpers.changeScoreOnTag(gnm, time.time(), pID)
                         gcm_api.sendIt(gnm)
                     self.write(repr(x))
