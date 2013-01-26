@@ -32,17 +32,13 @@ class DatabaseApi:
 		u = user.User()
 		u.fromDict(user_dict)
 		return u
-
-	# untested
-	def getUserByID(self, user_id):
-		pass
 		
 	# untested
 	def deleteUser(self, user):
 		pass
 
 	# untested
-	def updateUser(self, user, something):
+	def updateUser(self, userPhoneID, user_dict):
 		pass
 
 	# returns : Game object, if doesn't exist
@@ -71,7 +67,6 @@ class DatabaseApi:
 	def updateGame(self, game, something):
 		pass
 
-	# untested
 	# return : true,  if successful
 	# 		   false, if unsuccessful
 	def addUserToGame(self, userPhoneID, gameName):

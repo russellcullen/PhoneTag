@@ -1,5 +1,5 @@
 from baseobj import *
-from user import User
+from user import *
 
 class Game(BaseClass):
 	def __init__(self, name = "", users = [], it = False):
