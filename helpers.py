@@ -13,9 +13,9 @@ def changeScoreOnTag(gameID, time, lastIt):
 	period = time - game.lastItTime
 	#assert(lastIt in game.negativeboard)
 	game.negativeboard[lastIt] += period
-    game.lastItTime = time
-    
-    db.updateGame(game.__dict__)
+	game.lastItTime = time
+
+	db.updateGame(game.__dict__)
 	
 def updateScores(game, time):
 	db = DatabaseApi(databaseName)
