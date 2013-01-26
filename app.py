@@ -14,7 +14,7 @@ import helpers
 
 
 #gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
-databaseName = 'test'
+databaseName = 'heroku_app11283429'
 
 #logging.basicConfig(filename='server.log',level=logging.DEBUG)
 logging.basicConfig(level=logging.DEBUG)
