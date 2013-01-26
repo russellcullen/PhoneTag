@@ -23,7 +23,7 @@ def updateScores(game, time):
 	leaderboard = game.leaderboard
 	for k,v in leaderboard.iteritems():
 		if k != game.it:
-			new_score = int(time - startTime - game.negativeboard[k])
+			new_score = time - startTime - game.negativeboard[k]
 			leaderboard[k] = new_score
 			if (new_score >= game.scoreLimit):
 				game.finished = True
