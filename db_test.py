@@ -90,6 +90,7 @@ def testRemoveUserFromGame():
 	return False
 
 def testGetAllUnfinishedGames():
+	reset_db(a)
 	games = a.getAllUnfinishedGames()
 	if len(games) == 2:
 		return True
