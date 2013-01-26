@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.phonetag.models.User;
@@ -43,9 +44,12 @@ public class GCMIntentService extends GCMBaseIntentService {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            
+            Log.e("USERS", users.get(0).getName());
             // TODO: Do something with users
         }
         if (intent.hasExtra("it")) {
+            Log.e("IT", "BOOM");
             try {
                 User it = Parsers.parseUser(new JSONObject(intent.getStringExtra("it")));
                 if (it.getPhoneID() == Globals.getInstance().getId()) {
@@ -69,18 +73,20 @@ public class GCMIntentService extends GCMBaseIntentService {
                 
                     notificationManager.notify(0, noti); 
                 }
+                Log.e("IT", it.getName());
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            
             // TODO: Update for everyone
         }
     }
 
     @Override
-    protected void onRegistered(Context arg0, String id) {
-        Globals.getInstance().setId(this, id);
-        Api.register(id, Globals.getInstance().getName());
+    protected void onRegistered(Context ctx, String id) {
+        Globals.getInstance().setId(ctx, id);
+        Api.register(ctx, id, Globals.getInstance().getName());
     }
 
     @Override
