@@ -11,13 +11,24 @@ class DatabaseApi:
 		self.connection = pymongo.Connection(os.environ.get('MONGOLAB_URI', None))
 		self.db = self.connection[db]
 	
-	def newUser(self, user):
+	# returns : User object, if doesn't exist
+	# 		  : None, 		 if user exists already
+	def newUser(self, user_dict):
 		users = self.db.users
-		users.insert(user.__dict__)
+		u = user.User()
+		u.fromDict(user_dict)
+		if self.getUserByPhoneID(u.phoneID) != None:
+			return None
+		users.insert(u.__dict__)
+		return u
 
+	# returns : User object, if exists
+	# 		  : None, 		 if doesn't exist
 	def getUserByPhoneID(self, phoneID):
 		users = self.db.users
 		user_dict = users.find_one({'phoneID' : phoneID})
+		if user_dict == None:
+			return None
 		u = user.User()
 		u.fromDict(user_dict)
 		return u
@@ -34,13 +45,24 @@ class DatabaseApi:
 	def updateUser(self, user, something):
 		pass
 
-	def newGame(self, game):
+	# returns : Game object, if doesn't exist
+	# 		  : None, 		 if exists already
+	def newGame(self, game_dict):
 		games = self.db.games
-		games.insert(game.__dict__)
+		g = game.Game()
+		g.fromDict(game_dict)
+		if self.getGameByName(g.name) != None:
+			return None
+		games.insert(g.__dict__)
+		return g
 
+	# returns : Game object, if exists
+	# 		  : None,		 if doesn't exist
 	def getGameByName(self, name):
 		games = self.db.games
 		game_dict = games.find_one({'name' : name})
+		if game_dict == None:
+			return None
 		g = game.Game()
 		g.fromDict(game_dict)
 		return g
@@ -55,12 +77,13 @@ class DatabaseApi:
 	def addUserToGame(self, userPhoneID, gameName):
 		games = self.db.games
 		game = self.getGameByName(gameName)
-		if (game != None):
-			users = game['users']
+		user = self.getUserByPhoneID(userPhoneID)
+		if game != None and user != None:
+			users = game.users
 			for u in users:
-				if u.equals(userPhoneID):
+				if u == userPhoneID:
 					return False
-			games.update({'name : gameName'}, {'$push' : {'users' : userPhoneID}})
+			games.update({'name' : gameName}, {'$push' : {'users' : userPhoneID}})
 			return True
 		return False
 
@@ -68,7 +91,6 @@ class DatabaseApi:
 	def removeUserFromGame(self, user, game):
 		pass
 
-	# untested
 	# returns : a list of phoneID's, if game exists
 	# 		  : an empty list, 		 if game doesn't exist
 	def getUsersByGame(self, gameName):
