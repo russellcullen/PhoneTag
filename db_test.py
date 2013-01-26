@@ -5,6 +5,8 @@ import user
 import game
 
 
+a = database_api.DatabaseApi('test')
+
 def reset_db(apiInstance):
 	# Clear previous test data
 	apiInstance.clear_db()
@@ -13,31 +15,52 @@ def reset_db(apiInstance):
 	insertSomeGames(apiInstance)
 	
 def insertSomeUsers(apiInstance):
-	user1 = user.User(name="user1", phoneID = "user1")
-	user2 = user.User(name="user2", phoneID = "user2")
+	user1 = {"name" : "user1", "phoneID" : "user1"}
+	user2 = {"name" : "user2", "phoneID" : "user2"}
 	apiInstance.newUser(user1)
 	apiInstance.newUser(user2)
 
 def insertSomeGames(apiInstance):
-	game1 = game.Game(name="game1")
+	game1 = {"name" : "game1"}
+	game2 = {"name" : "game2", "users" : ["user2"]}
 	apiInstance.newGame(game1)
+	apiInstance.newGame(game2)
 
-def testGetUserByPhoneID(apiInstance):
-	if apiInstance.getUserByPhoneID("user1") == None:
+
+
+
+
+def testGetUserByPhoneID():
+	reset_db(a)
+	if a.getUserByPhoneID("user1") == None:
 		return False
 	return True
 
-def testGetGameByName(apiInstance):
-	game1 = apiInstance.getGameByName("game1")
+def testGetGameByName():
+	reset_db(a)
+	game1 = a.getGameByName("game1")
 	if game1 == None:
 		return False
 	return True
 
-def testGetUsersByGame(apiInstance):
-	pass
+def testGetUsersByGame():
+	reset_db(a)
+	userList2 = a.getUsersByGame("game2")
+	if not (len(userList2) == 1 and userList2[0] == "user2"):
+		return False
+	userList1 = a.getUsersByGame("game1")
+	if not (len(userList1) == 0):
+		return False 
+	return True
 
-def testAddUserToGame(apiInstance):
-	pass
+def testAddUserToGame():
+	reset_db(a)
+	b = a.addUserToGame("user1", "game2")
+	c = a.addUserToGame("user3", "game2")
+	d = a.addUserToGame("user1", "game3")
+	if b and not c and not d:
+		return True
+	return False
 
 
 
@@ -49,27 +72,23 @@ def test():
 	allUsers = a.getAllUsers()
 	allGames = a.getAllGames()
 
-	raw_input("Look up all users?")
-
 	print '\nUSERS\n'
 	for i in allUsers:
 		print i['name']
-	print '\n'
-
-	raw_input("Look up all games?")
 
 	print '\nGAMES\n'
 	for i in allGames:
 		print i['name']
 	print '\n'
 
-	b = testGetUserByPhoneID(a)
-	c = testGetGameByName(a)
+	print "Testing Functions"
 
-	if b and c:
-		print "ALL GOOD"
-	else:
-		print "FAILURE"
+	print testGetUserByPhoneID()
+	print testGetGameByName()
+	print testGetUsersByGame()
+	print testAddUserToGame()
+
+
 
 	
 
