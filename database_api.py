@@ -130,7 +130,12 @@ class DatabaseApi:
 	def getAllUnfinishedGames(self):
 		games = self.db.games
 		unfinishedGames = list(games.find({'finished' : False}))
-		return unfinishedGames
+		ug = []
+		for gameDict in unfinishedGames:
+			g = game.Game()
+			g.fromDict(gameDict)
+			ug.append(g)
+		return ug
 
 
 	# Testing functions
