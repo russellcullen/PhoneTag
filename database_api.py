@@ -4,6 +4,7 @@ import pymongo
 import os
 import game
 import user
+import time
 
 class DatabaseApi:
 
@@ -79,7 +80,7 @@ class DatabaseApi:
 			games.update({'name' : gameName}, {'$push' : {'users' : userPhoneID}})
 			# add to game's scoreboard
 			negativeboard = game.negativeboard
-			negativeboard[userPhoneID] = 0
+			negativeboard[userPhoneID] = time.time() - game.startTime
 			games.update({'name' : gameName}, {'$set' : {'negativeboard' : negativeboard}})
 			leaderboard = game.leaderboard
 			leaderboard[userPhoneID] = 0
