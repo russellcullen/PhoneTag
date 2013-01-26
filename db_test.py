@@ -63,7 +63,7 @@ def testAddUserToGame():
 def testUpdateUser():
 	reset_db(a)
 	user1_dict = {"name" : "user1", "phoneID" : "user1", "latitude" : 2.0, "longitude" : 3.0}
-	if not a.updateUser("user1", user1_dict):
+	if not a.updateUser(user1_dict):
 		return False
 	u = a.getUserByPhoneID("user1")
 	if u.longitude == 3.0 and u.latitude == 2.0:
@@ -73,7 +73,7 @@ def testUpdateUser():
 def testUpdateGame():
 	reset_db(a)
 	game1_dict = {"name" : "game1", "users" : ["user2", "user1"]}
-	if not a.updateGame("game1", game1_dict):
+	if not a.updateGame(game1_dict):
 		return False
 	g = a.getGameByName("game1")
 	if len(g.users) == 2 and g.users[0] == "user2" and g.users[1] == "user1":

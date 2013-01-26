@@ -42,14 +42,15 @@ class DatabaseApi:
 
 	# returns : true,  if update succeeded
 	# 		  : false, if update failed
-	def updateUser(self, userPhoneID, userDict):
+	def updateUser(self, userDict):
 		users = self.db.users
-		if self.getUserByPhoneID(userPhoneID) == None:
+		phoneID = userDict['phoneID']
+		if self.getUserByPhoneID(phoneID) == None:
 			return False
 		# replace old user with new user
 		u = user.User();
 		u.fromDict(userDict);
-		users.update({'phoneID' : userPhoneID}, u.__dict__)
+		users.update({'phoneID' : phoneID}, u.__dict__)
 		return True
 
 	# returns : Game object, if doesn't exist
@@ -76,8 +77,9 @@ class DatabaseApi:
 
 	# returns : true,  if update succeeded
 	# 		  : false, if update failed
-	def updateGame(self, gameName, gameDict):
+	def updateGame(self, gameDict):
 		games = self.db.games
+		gameName = gameDict['name']
 		if self.getGameByName(gameName) == None:
 			return False
 		g = game.Game();
