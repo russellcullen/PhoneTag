@@ -12,7 +12,7 @@ gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
 class UpdateThread(threading.Thread): 
     def run(self):
         t = time.time()
-        interval = 15
+        interval = 10
         while(True):
             if (time.time() > t + interval):
                 t = time.time()
