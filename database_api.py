@@ -98,7 +98,15 @@ class DatabaseApi:
 			for u in users:
 				if u == userPhoneID:
 					return False
+			# add to game's user list
 			games.update({'name' : gameName}, {'$push' : {'users' : userPhoneID}})
+			# add to game's scoreboard
+			negativeboard = game.negativeboard
+			negativeboard[userPhoneID] = 0
+			games.update({'name' : gameName}, {'$set' : {'leaderboard' : negativeboard}})
+			leaderboard = game.leaderboard
+			leaderboard[userPhoneID] = 0
+			games.update({'name' : gameName}, {'$set' : {'leaderboard' : leaderboard}})
 			return True
 		return False
 
@@ -125,8 +133,8 @@ class DatabaseApi:
 			return []
 		return game['users']
 
-	# returns : a list of games, if unfinished games exist
-	# 		  : an empty list,   if all games are finished
+	# returns : a list of Game objects, if unfinished games exist
+	# 		  : an empty list,          if all games are finished
 	def getAllUnfinishedGames(self):
 		games = self.db.games
 		unfinishedGames = list(games.find({'finished' : False}))
