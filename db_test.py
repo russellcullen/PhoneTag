@@ -13,14 +13,33 @@ def reset_db(apiInstance):
 	insertSomeGames(apiInstance)
 	
 def insertSomeUsers(apiInstance):
-	user1 = user.User(name="user1")
-	user2 = user.User(name="user2")
+	user1 = user.User(name="user1", phoneID = "user1")
+	user2 = user.User(name="user2", phoneID = "user2")
 	apiInstance.newUser(user1)
 	apiInstance.newUser(user2)
 
 def insertSomeGames(apiInstance):
 	game1 = game.Game(name="game1")
 	apiInstance.newGame(game1)
+
+def testGetUserByPhoneID(apiInstance):
+	if apiInstance.getUserByPhoneID("user1") == None:
+		return False
+	return True
+
+def testGetGameByName(apiInstance):
+	game1 = apiInstance.getGameByName("game1")
+	if game1 == None:
+		return False
+	return True
+
+def testGetUsersByGame(apiInstance):
+	pass
+
+def testAddUserToGame(apiInstance):
+	pass
+
+
 
 def test():
 
@@ -43,6 +62,16 @@ def test():
 	for i in allGames:
 		print i['name']
 	print '\n'
+
+	b = testGetUserByPhoneID(a)
+	c = testGetGameByName(a)
+
+	if b and c:
+		print "ALL GOOD"
+	else:
+		print "FAILURE"
+
+	
 
 if __name__ == "__main__":
 	print test()
