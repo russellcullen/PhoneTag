@@ -22,6 +22,7 @@ public class Api {
     private static String URL_TAG = URL_BASE + "/tag";
     private static String URL_REMOVE = URL_BASE + "/remove";
     private static String URL_NEW_GAME = URL_BASE + "/newGame";
+    private static String URL_JOIN_GAME = URL_BASE + "/joinGame";
     
     public static void register(Context ctx, String id, String name) {
         StringBuilder sb = new StringBuilder();
@@ -34,13 +35,15 @@ public class Api {
         Globals.getInstance().setToken(ctx, token);
     }
     
-    public static void tag(String gameId, String myId, String taggedId) {
+    public static void tag(String gameId, String myId, String taggedName) {
         StringBuilder sb = new StringBuilder();
         sb.append(URL_TAG);
-        sb.append("?name=");
+        sb.append("?phoneID=");
         sb.append(myId);
-        sb.append("&tagged=");
-        sb.append(taggedId);
+        sb.append("&tagName=");
+        sb.append(taggedName);
+        sb.append("&gameName=");
+        sb.append(gameId);
         sb.append(token());
         getHttpResponse(sb.toString());
     }
@@ -61,6 +64,28 @@ public class Api {
     public static void newGame(Context ctx, String id, String name) {
         StringBuilder sb = new StringBuilder();
         sb.append(URL_NEW_GAME);
+        sb.append("?phoneID=");
+        sb.append(id);
+        sb.append("&gameName=");
+        sb.append(name);
+        sb.append(token());
+        String gameJson = getHttpResponse(sb.toString());
+        List<Game> games = Globals.getInstance().getGames();
+        if (games == null) {
+            games = new ArrayList<Game>();
+        }
+        try {
+            games.add(Parsers.parseGame(new JSONObject(gameJson)));
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Globals.getInstance().setGames(ctx, games);
+    }
+    
+    public static void joinGame(Context ctx, String id, String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(URL_JOIN_GAME);
         sb.append("?phoneID=");
         sb.append(id);
         sb.append("&gameName=");

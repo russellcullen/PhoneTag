@@ -9,7 +9,7 @@ public class UpdateTask extends AsyncTask<Void, Void, Void> {
     
     private double lat;
     private double lng;
-    
+
     public UpdateTask(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;

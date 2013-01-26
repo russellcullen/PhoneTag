@@ -5,5 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="/Users/russell/Documents/Android/android-sdk-macosx/extras/google/gcm/gcm-client/dist/gcm.jar"/>
+	<classpathentry kind="lib" path="/Users/russell/Documents/Android/android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib/bin/google-play-services_lib.jar"/>
+	<classpathentry kind="lib" path="/Users/russell/Documents/Android/android-sdk-macosx/extras/android/support/v4/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

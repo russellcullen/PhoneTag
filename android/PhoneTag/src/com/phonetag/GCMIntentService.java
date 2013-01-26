@@ -49,7 +49,9 @@ public class GCMIntentService extends GCMBaseIntentService {
                 e.printStackTrace();
             }
             
-            Log.e("USERS", users.get(0).getName());
+            Globals.getInstance().setUsers(arg0, users);
+            Intent broadcast = new Intent("com.phonetag.update");
+            sendBroadcast(broadcast);
             // TODO: Do something with users
         }
         if (intent.hasExtra("it")) {
@@ -94,16 +96,17 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context ctx, String id) {
         Globals.getInstance().setId(ctx, id);
         Api.register(ctx, id, "coolbrow");
+        Globals.getInstance().setName(this, "coolbrow");
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null) {
             Api.updateLoc(id, location.getLatitude(), location.getLongitude());
         }
+        Api.newGame(ctx, id, "yoloswag");
     }
 
     @Override
     protected void onUnregistered(Context arg0, String arg1) {
         // TODO Auto-generated method stub
-        
     }
 }
