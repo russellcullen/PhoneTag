@@ -13,3 +13,4 @@ class Game(BaseClass):
 
 	def removeUser(self, user):
 		pass
+
