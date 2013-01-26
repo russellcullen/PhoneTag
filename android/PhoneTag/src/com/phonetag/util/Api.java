@@ -17,7 +17,8 @@ import java.util.List;
 
 public class Api {
     
-    private static String URL_BASE = "http://128.237.244.183:5000";
+//    private static String URL_BASE = "http://128.237.244.183:5000";
+    private static String URL_BASE = "http://phone-tag.herokuapp.com";
     private static String URL_REGISTER = URL_BASE + "/newUser";
     private static String URL_UPDATE = URL_BASE + "/updateUser";
     private static String URL_TAG = URL_BASE + "/tag";
