@@ -9,10 +9,13 @@ databaseName = 'heroku_app11283429'
 def changeScoreOnTag(gameID, time, lastIt):
 	db = DatabaseApi(databaseName)
 	game = db.getGameByName(gameID)
-	print game
+	#print game
 	period = time - game.lastItTime
-	assert(lastIt in game.negativeboard)
+	#assert(lastIt in game.negativeboard)
 	game.negativeboard[lastIt] += period
+    game.lastItTime = time
+    
+    db.updateGame(game.__dict__)
 	
 def updateScores(game, time):
 	db = DatabaseApi(databaseName)
@@ -20,7 +23,7 @@ def updateScores(game, time):
 	leaderboard = game.leaderboard
 	for k,v in leaderboard.iteritems():
 		if k != game.it:
-			new_score = time - startTime - game.negativeboard[k]
+			new_score = int(time - startTime - game.negativeboard[k])
 			leaderboard[k] = new_score
 			if (new_score >= game.scoreLimit):
 				game.finished = True
