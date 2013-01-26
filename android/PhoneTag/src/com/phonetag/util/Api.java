@@ -2,18 +2,26 @@ package com.phonetag.util;
 
 import android.content.Context;
 
+import com.phonetag.models.Game;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Api {
     
     private static String URL_BASE = "http://128.237.125.40:5000";
     private static String URL_REGISTER = URL_BASE + "/newUser";
-    private static String URL_UPDATE = URL_BASE + "/udpateUser";
+    private static String URL_UPDATE = URL_BASE + "/updateUser";
     private static String URL_TAG = URL_BASE + "/tag";
     private static String URL_REMOVE = URL_BASE + "/remove";
+    private static String URL_NEW_GAME = URL_BASE + "/newGame";
     
     public static void register(Context ctx, String id, String name) {
         StringBuilder sb = new StringBuilder();
@@ -37,7 +45,7 @@ public class Api {
         getHttpResponse(sb.toString());
     }
     
-    public static void updateLoc(String id, float lat, float lng) {
+    public static void updateLoc(String id, double lat, double lng) {
         StringBuilder sb = new StringBuilder();
         sb.append(URL_UPDATE);
         sb.append("?phoneID=");
@@ -48,6 +56,28 @@ public class Api {
         sb.append(lng);
         sb.append(token());
         getHttpResponse(sb.toString());
+    }
+    
+    public static void newGame(Context ctx, String id, String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(URL_NEW_GAME);
+        sb.append("?phoneID=");
+        sb.append(id);
+        sb.append("&gameName=");
+        sb.append(name);
+        sb.append(token());
+        String gameJson = getHttpResponse(sb.toString());
+        List<Game> games = Globals.getInstance().getGames();
+        if (games == null) {
+            games = new ArrayList<Game>();
+        }
+        try {
+            games.add(Parsers.parseGame(new JSONObject(gameJson)));
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Globals.getInstance().setGames(ctx, games);
     }
     
     public static void remove(String id) {

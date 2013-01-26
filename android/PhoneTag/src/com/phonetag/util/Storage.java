@@ -1,6 +1,7 @@
 package com.phonetag.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -29,37 +30,49 @@ public class Storage {
         FileOutputStream fos;
         try {
             // Save users
-            fos = ctx.openFileOutput(USERS_FILE, Context.MODE_PRIVATE);
-            String users = objectsToJSONArray(Globals.getInstance().getUsers()).toString();
-            fos.write(users.getBytes());
-            fos.close();
+            if (Globals.getInstance().getUsers() != null) {
+                fos = ctx.openFileOutput(USERS_FILE, Context.MODE_PRIVATE);
+                String users = objectsToJSONArray(Globals.getInstance().getUsers()).toString();
+                fos.write(users.getBytes());
+                fos.close();
+            }
             
             // Save friends
-            fos = ctx.openFileOutput(FRIENDS_FILE, Context.MODE_PRIVATE);
-            String friends = objectsToJSONArray(Globals.getInstance().getFriends()).toString();
-            fos.write(friends.getBytes());
-            fos.close();
+            if (Globals.getInstance().getFriends() != null) {
+                fos = ctx.openFileOutput(FRIENDS_FILE, Context.MODE_PRIVATE);
+                String friends = objectsToJSONArray(Globals.getInstance().getFriends()).toString();
+                fos.write(friends.getBytes());
+                fos.close();
+            }
             
             // Save games
-            fos = ctx.openFileOutput(GAMES_FILE, Context.MODE_PRIVATE);
-            String games = objectsToJSONArray(Globals.getInstance().getGames()).toString();
-            fos.write(games.getBytes());
-            fos.close();
+            if (Globals.getInstance().getGames() != null) {
+                fos = ctx.openFileOutput(GAMES_FILE, Context.MODE_PRIVATE);
+                String games = objectsToJSONArray(Globals.getInstance().getGames()).toString();
+                fos.write(games.getBytes());
+                fos.close();
+            }
             
             // Save token
-            fos = ctx.openFileOutput(TOKEN_FILE, Context.MODE_PRIVATE);
-            fos.write(Globals.getInstance().getToken().getBytes());
-            fos.close();
+            if (Globals.getInstance().getToken() != null) {
+                fos = ctx.openFileOutput(TOKEN_FILE, Context.MODE_PRIVATE);
+                fos.write(Globals.getInstance().getToken().getBytes());
+                fos.close();
+            }
             
             // Save id
-            fos = ctx.openFileOutput(ID_FILE, Context.MODE_PRIVATE);
-            fos.write(Globals.getInstance().getId().getBytes());
-            fos.close();
+            if (Globals.getInstance().getId() != null) {
+                fos = ctx.openFileOutput(ID_FILE, Context.MODE_PRIVATE);
+                fos.write(Globals.getInstance().getId().getBytes());
+                fos.close();
+            }
             
             // Save name
-            fos = ctx.openFileOutput(NAME_FILE, Context.MODE_PRIVATE);
-            fos.write(Globals.getInstance().getName().getBytes());
-            fos.close();
+            if (Globals.getInstance().getName() != null) {
+                fos = ctx.openFileOutput(NAME_FILE, Context.MODE_PRIVATE);
+                fos.write(Globals.getInstance().getName().getBytes());
+                fos.close();
+            }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,7 +98,10 @@ public class Storage {
             }
             g.setUsers(ctx, Parsers.parseUserArray(new JSONArray(sb.toString())));
             fis.close();
-            
+        } catch (Exception e) {
+            Log.e("ERROR", "OPENING USERS FILE");
+        }
+        try {
             // Load friends
             fis = ctx.openFileInput(FRIENDS_FILE);
             inputStreamReader = new InputStreamReader(fis);
@@ -96,7 +112,10 @@ public class Storage {
             }
             g.setFriends(ctx, Parsers.parseUserArray(new JSONArray(sb.toString())));
             fis.close();
-
+        } catch (Exception e) {
+            Log.e("ERROR", "OPENING FRIENDS FILE");
+        }
+        try {
             // Load games
             fis = ctx.openFileInput(GAMES_FILE);
             inputStreamReader = new InputStreamReader(fis);
@@ -107,7 +126,10 @@ public class Storage {
             }
             g.setGames(ctx, Parsers.parseGameArray(new JSONArray(sb.toString())));
             fis.close();
-            
+        } catch (Exception e) {
+            Log.e("ERROR", "OPENING GAMES FILE");
+        }
+        try {
             // Load token
             fis = ctx.openFileInput(TOKEN_FILE);
             inputStreamReader = new InputStreamReader(fis);
@@ -118,7 +140,10 @@ public class Storage {
             }
             g.setToken(ctx, sb.toString());
             fis.close();
-            
+        } catch (Exception e) {
+            Log.e("ERROR", "OPENING TOKEN FILE");
+        }
+        try {
             // Load id
             fis = ctx.openFileInput(ID_FILE);
             inputStreamReader = new InputStreamReader(fis);
@@ -129,7 +154,10 @@ public class Storage {
             }
             g.setId(ctx, sb.toString());
             fis.close();
-            
+        } catch (Exception e) {
+            Log.e("ERROR", "OPENING ID FILE");
+        }
+        try {
             // Load name
             fis = ctx.openFileInput(NAME_FILE);
             inputStreamReader = new InputStreamReader(fis);
@@ -140,9 +168,8 @@ public class Storage {
             }
             g.setName(ctx, sb.toString());
             fis.close();
-            
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ERROR", "OPENING NAME FILE");
         }
     }
     

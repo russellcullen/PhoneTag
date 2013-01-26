@@ -7,8 +7,8 @@ public class User {
    
     private String phoneID;
     private String name;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private List<String> friends;
     private List<String> games;
     
@@ -24,13 +24,13 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
     public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
     public void setLongitude(float longitude) {

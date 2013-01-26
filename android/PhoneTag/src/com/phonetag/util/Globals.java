@@ -1,6 +1,7 @@
 package com.phonetag.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.phonetag.models.Game;
 import com.phonetag.models.User;
@@ -11,12 +12,12 @@ public class Globals {
     
     private static Globals mInstance;
     
-    private static String name;
-    private static String id;
-    private static String token;
-    private static List<Game> games;
-    private static List<User> users;
-    private static List<User> friends;
+    private String name;
+    private String id;
+    private String token;
+    private List<Game> games;
+    private List<User> users;
+    private List<User> friends;
     
     private Globals() {}
     
@@ -32,7 +33,7 @@ public class Globals {
     }
 
     public void setName(Context ctx, String name) {
-        Globals.name = name;
+        this.name = name;
         Storage.save(ctx);
     }
 
@@ -41,7 +42,7 @@ public class Globals {
     }
 
     public void setId(Context ctx, String id) {
-        Globals.id = id;
+        this.id = id;
         Storage.save(ctx);
     }
 
@@ -50,7 +51,8 @@ public class Globals {
     }
 
     public void setToken(Context ctx, String token) {
-        Globals.token = token;
+        this.token = token;
+        Log.e("SETTING", "SETing TOKEN");
         Storage.save(ctx);
     }
 
@@ -59,7 +61,7 @@ public class Globals {
     }
 
     public void setGames(Context ctx, List<Game> games) {
-        Globals.games = games;
+        this.games = games;
         Storage.save(ctx);
     }
 
@@ -68,7 +70,7 @@ public class Globals {
     }
 
     public void setUsers(Context ctx, List<User> users) {
-        Globals.users = users;
+        this.users = users;
         Storage.save(ctx);
     }
 
@@ -77,7 +79,7 @@ public class Globals {
     }
 
     public void setFriends(Context ctx, List<User> friends) {
-        Globals.friends = friends;
+        this.friends = friends;
         Storage.save(ctx);
     }
     
