@@ -89,6 +89,11 @@ def testRemoveUserFromGame():
 		return True
 	return False
 
+def testGetAllUnfinishedGames():
+	games = a.getAllUnfinishedGames()
+	if len(games) == 2:
+		return True
+	return False
 
 def test():
 
@@ -116,6 +121,7 @@ def test():
 	print testUpdateUser()
 	print testUpdateGame()
 	print testRemoveUserFromGame()
+	print testGetAllUnfinishedGames()
 
 if __name__ == "__main__":
 	print test()

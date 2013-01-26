@@ -102,7 +102,8 @@ class DatabaseApi:
 			return True
 		return False
 
-	# untested
+	# returns : true,  if successful
+	# 		  : false, if failed
 	def removeUserFromGame(self, userPhoneID, gameName):
 		games = self.db.games
 		game = self.getGameByName(gameName)
@@ -123,6 +124,13 @@ class DatabaseApi:
 		if (game == None):
 			return []
 		return game['users']
+
+	# returns : a list of games, if unfinished games exist
+	# 		  : an empty list,   if all games are finished
+	def getAllUnfinishedGames(self):
+		games = self.db.games
+		unfinishedGames = list(games.find({'finished' : False}))
+		return unfinishedGames
 
 
 	# Testing functions
