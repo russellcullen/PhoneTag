@@ -45,10 +45,10 @@ class DatabaseApi:
 	def updateUser(self, userDict):
 		users = self.db.users
 		phoneID = userDict['phoneID']
-		if self.getUserByPhoneID(phoneID) == None:
+		u = self.getUserByPhoneID(phoneID)
+		if u == None:
 			return False
 		# replace old user with new user
-		u = user.User();
 		u.fromDict(userDict);
 		users.update({'phoneID' : phoneID}, u.__dict__)
 		return True
@@ -105,9 +105,9 @@ class DatabaseApi:
 	def updateGame(self, gameDict):
 		games = self.db.games
 		gameName = gameDict['name']
-		if self.getGameByName(gameName) == None:
+		g = self.getGameByName(gameName)
+		if g == None:
 			return False
-		g = game.Game();
 		g.fromDict(gameDict);
 		games.update({'name' : gameName}, g.__dict__)
 		return True

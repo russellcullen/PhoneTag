@@ -62,11 +62,11 @@ def testAddUserToGame():
 
 def testUpdateUser():
 	reset_db(a)
-	user1_dict = {"name" : "user1", "phoneID" : "user1", "latitude" : 2.0, "longitude" : 3.0}
+	user1_dict = {"phoneID" : "user1", "latitude" : 2.0, "longitude" : 3.0}
 	if not a.updateUser(user1_dict):
 		return False
 	u = a.getUserByPhoneID("user1")
-	if u.longitude == 3.0 and u.latitude == 2.0:
+	if u.longitude == 3.0 and u.latitude == 2.0 and u.name == "user1":
 		return True
 	return False
 
