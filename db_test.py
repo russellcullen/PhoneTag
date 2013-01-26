@@ -82,6 +82,11 @@ def testUpdateGame():
 
 def testRemoveUserFromGame():
 	reset_db(a)
+	if not a.removeUserFromGame("user2", "game2"):
+		return False
+	g = a.getGameByName("game2")
+	if len(g.users) == 0:
+		return True
 	return False
 
 
@@ -111,10 +116,6 @@ def test():
 	print testUpdateUser()
 	print testUpdateGame()
 	print testRemoveUserFromGame()
-
-
-
-	
 
 if __name__ == "__main__":
 	print test()

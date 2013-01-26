@@ -102,7 +102,16 @@ class DatabaseApi:
 
 	# untested
 	def removeUserFromGame(self, userPhoneID, gameName):
-		pass
+		games = self.db.games
+		game = self.getGameByName(gameName)
+		users = game.users
+		for user in users:
+			if user == userPhoneID:
+				users.remove(user)
+				games.update({'name' : gameName}, {'$set' : {'users' : users}})
+				return True
+			return False
+		return False
 
 	# returns : a list of phoneID's, if game exists
 	# 		  : an empty list, 		 if game doesn't exist
