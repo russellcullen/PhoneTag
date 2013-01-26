@@ -12,7 +12,7 @@ def sendIt(gameID):
     u = game.users
     reg_ids = []
     for x in xrange(len(u)):
-        reg_ids.append(u[x].phoneID)
+        reg_ids.append(u[x])
     data = {"it": json.dumps(user.__dict__)}
     response = gcm.json_request(registration_ids=reg_ids, data=data)
 
