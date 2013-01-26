@@ -28,8 +28,6 @@ def insertSomeGames(apiInstance):
 
 
 
-
-
 def testGetUserByPhoneID():
 	reset_db(a)
 	if a.getUserByPhoneID("user1") == None:
@@ -63,8 +61,33 @@ def testAddUserToGame():
 	return False
 
 def testUpdateUser():
+	reset_db(a)
+	user1_dict = {"name" : "user1", "phoneID" : "user1", "latitude" : 2.0, "longitude" : 3.0}
+	if not a.updateUser(user1_dict):
+		return False
+	u = a.getUserByPhoneID("user1")
+	if u.longitude == 3.0 and u.latitude == 2.0:
+		return True
 	return False
 
+def testUpdateGame():
+	reset_db(a)
+	game1_dict = {"name" : "game1", "users" : ["user2", "user1"]}
+	if not a.updateGame(game1_dict):
+		return False
+	g = a.getGameByName("game1")
+	if len(g.users) == 2 and g.users[0] == "user2" and g.users[1] == "user1":
+		return True
+	return False
+
+def testRemoveUserFromGame():
+	reset_db(a)
+	if not a.removeUserFromGame("user2", "game2"):
+		return False
+	g = a.getGameByName("game2")
+	if len(g.users) == 0:
+		return True
+	return False
 
 
 def test():
@@ -91,10 +114,8 @@ def test():
 	print testGetUsersByGame()
 	print testAddUserToGame()
 	print testUpdateUser()
-
-
-
-	
+	print testUpdateGame()
+	print testRemoveUserFromGame()
 
 if __name__ == "__main__":
 	print test()
