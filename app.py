@@ -7,7 +7,6 @@ from gcm import GCM
 gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
 
 
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hi Universe")
