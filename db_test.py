@@ -62,6 +62,9 @@ def testAddUserToGame():
 		return True
 	return False
 
+def testUpdateUser():
+	return False
+
 
 
 def test():
@@ -87,6 +90,7 @@ def test():
 	print testGetGameByName()
 	print testGetUsersByGame()
 	print testAddUserToGame()
+	print testUpdateUser()
 
 
 
