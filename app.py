@@ -7,9 +7,11 @@ import logging
 import time
 from bson.json_util import dumps
 import json
-from gcm import GCM
+#from gcm import GCM
 import gcm_api
 import helpers
+
+
 
 #gcm = GCM('AIzaSyABIlZS0Ad_hG2CC4tjotYg2NMMZQqKI-o')
 databaseName = 'test'
@@ -20,13 +22,6 @@ logging.basicConfig(level=logging.DEBUG)
 def hash(val):
     return "YOLOSWAG_"+val
 
-def getQueryComponents(msg):
-    x = self.__dict__["request"]
-    loc = x.uri.find("?")
-    dbCall = x.uri[1:loc]
-    query = x.uri[loc+1:]
-    query_c = dict(qc.split("=") for qc in query.split("&"))
-    return query_c
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -44,9 +39,6 @@ class UserGetHandler(tornado.web.RequestHandler):
         
         pID = query_components.get("phoneID")
         tkn = query_components.get("token")
-        
-        logging.debug("QueryComponents:")
-        #logging.debug(repr(query_components))
         
         DB = database_api.DatabaseApi(databaseName)
         
@@ -185,6 +177,8 @@ if __name__ == "__main__":
 	port = int(os.environ.get('PORT', 5000))
 	application.listen(port)
 	tornado.ioloop.IOLoop.instance().start()
+    t = gcm_api.UpdateThread()
+    t.start()
 
 
 
