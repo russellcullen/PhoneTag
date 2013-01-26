@@ -1,10 +1,14 @@
-class Game(object):
-    def __init__(self, name = "", users = [], it = False):
-    	self.name = name
-    	self.users = users
-    	self.it = it
+from baseobj import *
+from user import User
 
-    def fromDict(self, d):
-		for k,v in d.items():
-			if (hasattr(self, k)):
-				setattr(self, k, v)
+class Game(BaseClass):
+	def __init__(self, name = "", users = [], it = False):
+		self.name = name
+		self.users = users
+		self.it = it
+
+	def addUser(self, user):
+		pass
+
+	def removeUser(self, user):
+		pass
