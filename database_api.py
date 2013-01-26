@@ -13,11 +13,14 @@ class DatabaseApi:
 	
 	# returns : User object, if doesn't exist
 	# 		  : None, 		 if user exists already
-	def newUser(self, user_dict):
+	def newUser(self, userDict):
 		users = self.db.users
 		u = user.User()
-		u.fromDict(user_dict)
+		u.fromDict(userDict)
 		if self.getUserByPhoneID(u.phoneID) != None:
+			return None
+		sameNameUser = users.find_one({'name' : u.name})
+		if sameNameUser != None:
 			return None
 		users.insert(u.__dict__)
 		return u
@@ -34,19 +37,27 @@ class DatabaseApi:
 		return u
 		
 	# untested
-	def deleteUser(self, user):
+	def deleteUser(self, userPhoneID):
 		pass
 
-	# untested
-	def updateUser(self, userPhoneID, user_dict):
-		pass
+	# returns : true,  if update succeeded
+	# 		  : false, if update failed
+	def updateUser(self, userPhoneID, userDict):
+		users = self.db.users
+		if self.getUserByPhoneID(userPhoneID) == None:
+			return False
+		# replace old user with new user
+		u = user.User();
+		u.fromDict(userDict);
+		users.update({'phoneID' : userPhoneID}, u.__dict__)
+		return True
 
 	# returns : Game object, if doesn't exist
 	# 		  : None, 		 if exists already
-	def newGame(self, game_dict):
+	def newGame(self, gameDict):
 		games = self.db.games
 		g = game.Game()
-		g.fromDict(game_dict)
+		g.fromDict(gameDict)
 		if self.getGameByName(g.name) != None:
 			return None
 		games.insert(g.__dict__)
@@ -63,9 +74,16 @@ class DatabaseApi:
 		g.fromDict(game_dict)
 		return g
 
-	# untested
-	def updateGame(self, game, something):
-		pass
+	# returns : true,  if update succeeded
+	# 		  : false, if update failed
+	def updateGame(self, gameName, gameDict):
+		games = self.db.games
+		if self.getGameByName(gameName) == None:
+			return False
+		g = game.Game();
+		g.fromDict(gameDict);
+		games.update({'name' : gameName}, g.__dict__)
+		return True
 
 	# return : true,  if successful
 	# 		   false, if unsuccessful
@@ -83,7 +101,7 @@ class DatabaseApi:
 		return False
 
 	# untested
-	def removeUserFromGame(self, user, game):
+	def removeUserFromGame(self, userPhoneID, gameName):
 		pass
 
 	# returns : a list of phoneID's, if game exists

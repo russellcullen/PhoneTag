@@ -2,10 +2,11 @@ from baseobj import *
 from user import *
 
 class Game(BaseClass):
-	def __init__(self, name = "", users = [], it = False):
+	def __init__(self, name = "", users = [], it = False, finished = False):
 		self.name = name
 		self.users = users
 		self.it = it
+		self.finished = finished
 
 	def addUser(self, user):
 		pass
