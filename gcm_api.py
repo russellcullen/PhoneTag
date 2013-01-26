@@ -3,6 +3,7 @@ import user
 import json
 import threading
 import time
+import operator
 from helpers import *
 from database_api import *
 from gcm import GCM
@@ -19,8 +20,24 @@ class UpdateThread(threading.Thread):
                 sendUserInfoAll()
                 updateScoresAll(t)
                 checkFinishedAll(t)
-                
+                sendScoresAll()
 
+def sendScoresAll():
+    db = DatabaseApi()
+    games = db.getAllUnfinishedGames()
+    for x in games:
+        a = []
+        sorted_scores.reverse() = sorted(x.leaderboard.iteritems(), key=operator.itemgetter(1))
+        for y in sorted_scores:
+            a.append({y[0] : y[1]})
+        u = x.users
+        ids = []
+        for z in xrange(len(u)):
+            ids.append(u[z])
+        data = {"scores" : json.dumps(a)}
+        if (len(ids) > 0):
+            response = gcm.json_request(registration_ids=ids, data = data)
+    
 def sendIt(gameID):
     
     db = DatabaseApi()
